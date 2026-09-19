@@ -433,25 +433,51 @@ html[data-theme="light"] .stat:nth-child(3) .stat-num{color:#0a9c86}
 }
 
 /* =====================================================================
-   GSAP FX LAYER  (js/fx.js)
+   GSAP MOTION LAYER   (js/fx.js)
+   `html.gsap-on` means GSAP is alive and the CSS animations step aside.
    ===================================================================== */
-/* split-title masks — each line clips its own letters */
-.hero-title .ln,.page-head .title .ln{display:block;overflow:hidden;padding-bottom:.05em}
-.hero-title h1 span.ch,.page-head .title span.ch{display:inline-block;color:inherit;will-change:transform}
-.hero-title .ln.dim span.ch{color:var(--fg-dim)}
 
-/* scroll progress hairline */
+/* ---- split text ---- */
+.hl{display:block}
+.hl.dim{color:var(--fg-dim)}
+.ln{display:block;overflow:hidden;padding-bottom:.08em}
+.ch{display:inline-block;will-change:transform}
+.hero-title h1 span.ch,.title span.ch{display:inline-block;color:inherit}
+.hl.dim .ch{color:var(--fg-dim)}
+.pl{display:block;will-change:transform}
+
+/* ---- gsap takes over the reveal + card animations ---- */
+html.gsap-on .reveal{opacity:1;filter:none;transform:none;transition:none}
+html.gsap-on .works-grid .work-card{animation:none}
+html.gsap-on .work-card{transition:border-color .5s,box-shadow .5s}
+html.gsap-on .work-card:hover,
+html.gsap-on .work-card:focus-visible{transform:none}
+html.gsap-on .marquee:hover .marquee-row{animation-play-state:running}
+
+/* ---- intro curtain ---- */
+html.pre-on,html.pre-on body{overflow:hidden}
+.pre{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.pre-in{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative}
+.pre-name{font-size:clamp(40px,8vw,92px);font-weight:900;text-transform:uppercase;letter-spacing:-.04em;line-height:1;color:var(--fg)}
+.pre-role{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--fg-faint)}
+.pre-bar{width:min(240px,50vw);height:2px;margin-top:24px;background:var(--border);overflow:hidden}
+.pre-bar i{display:block;width:100%;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
+.pre-n{font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:.1em}
+
+/* ---- works gallery filtering ---- */
+.works-grid{position:relative}
+.work-card.is-out{display:none}
+html.gsap-on .filter{transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
+.filter{will-change:transform}
+
+/* ---- scroll progress ---- */
 .scroll-prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:500;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;pointer-events:none;box-shadow:0 0 12px var(--accent)}
 
-/* the marquee is driven by gsap now, so the css animation stays off */
-.marquee-row{will-change:transform}
-.marquee:hover .marquee-row{animation-play-state:running}
-
-/* card media needs room to move for the depth parallax */
-.wc-media,.wc-bottom{will-change:transform}
+/* ---- things gsap moves every frame ---- */
+.marquee-row,.wc-media,.wc-bottom,.wc-top,.hero-col{will-change:transform}
 .wc-poster,.wc-video{transform:scale(1.02)}
 
 @media(prefers-reduced-motion:reduce){
   .scroll-prog{display:none}
-  .hero-title h1 span.ch,.page-head .title span.ch{transform:none!important}
+  .ch,.pl{transform:none!important}
 }
