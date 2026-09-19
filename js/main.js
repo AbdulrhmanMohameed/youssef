@@ -308,22 +308,37 @@ if (heroInner) {
     el.innerHTML = html;
   });
 
-  /* timeline clips */
-  const tone = ['a', 'b', 'c', 'd', 'e', 'f'];
-  function lane(el, seed, minW, maxW, gapChance) {
-    const rnd = seeded(seed); let x = rnd() * 2, html = '';
-    while (x < 97) {
-      x += rnd() < gapChance ? 1 + rnd() * 5 : 0.5;
-      const w = Math.min(minW + rnd() * (maxW - minW), 100 - x);
-      if (w < 2) break;
-      html += `<i class="tl-clip tone-${tone[Math.floor(rnd() * 6)]}" style="left:${x.toFixed(2)}%;width:${w.toFixed(2)}%"></i>`;
-      x += w;
-    }
-    el.innerHTML = html;
+  /* timeline clips: footage on V1, titles on V2, linked audio on A1 */
+  const V1_NAMES = ['A012_C003', 'Interview_01', 'Drone_04', 'B-roll', 'GH010231', 'Cutaway', 'Product_02', 'A014_C009', 'Outro'];
+  const V2_NAMES = ['Title', 'Lower third', 'Logo', 'Subtitle', 'Overlay'];
+  const V1_COLORS = ['teal', 'teal', 'blue', 'blue', 'ember'];
+  const rnd = seeded(8);
+  const cuts = []; let cx = 0;
+  while (cx < 99) {
+    let w = 9 + rnd() * 15;
+    if (100 - (cx + w) < 8) w = 100 - cx;
+    cuts.push([cx, w]); cx += w;
   }
-  lane($('#laneV2'), 21, 4, 12, 0.7);
-  lane($('#laneV1'), 8, 7, 20, 0.15);
-  $('#laneA1').innerHTML = waveHTML(150, seeded(3));
+  $('#laneV1').innerHTML = cuts.map(([x, w], i) =>
+    `<div class="tl-clip thumbs c-${V1_COLORS[Math.floor(rnd() * V1_COLORS.length)]}" style="left:${x.toFixed(2)}%;width:${(w - 0.3).toFixed(2)}%"><span>${V1_NAMES[i % V1_NAMES.length]}</span></div>`).join('');
+
+  const r2 = seeded(21); let px = 4, k = 0, v2 = '';
+  while (px < 90) {
+    const w = 5 + r2() * 7;
+    v2 += `<div class="tl-clip c-${r2() < 0.6 ? 'violet' : 'rose'}" style="left:${px.toFixed(2)}%;width:${w.toFixed(2)}%"><span>${V2_NAMES[k++ % V2_NAMES.length]}</span></div>`;
+    px += w + 7 + r2() * 14;
+  }
+  $('#laneV2').innerHTML = v2;
+
+  const r3 = seeded(3);
+  $('#laneA1').innerHTML = cuts.map(([x, w]) => {
+    const n = Math.max(10, Math.round(w * 3.4)), ph0 = r3() * 6, top = [], bot = [];
+    for (let i = 0; i < n; i++) {
+      const a = (0.2 + 0.8 * r3()) * (0.45 + 0.55 * Math.abs(Math.sin(i / 3.4 + ph0)));
+      top.push(`${i},${(10 - a * 9).toFixed(2)}`); bot.unshift(`${i},${(10 + a * 9).toFixed(2)}`);
+    }
+    return `<div class="tl-aclip" style="left:${x.toFixed(2)}%;width:${(w - 0.3).toFixed(2)}%"><svg viewBox="0 0 ${n} 20" preserveAspectRatio="none"><polygon points="${top.concat(bot).join(' ')}"/></svg></div>`;
+  }).join('');
 
   /* playhead + timecode */
   const ph = $('#tlPH'), tc = $('#tlTC');
