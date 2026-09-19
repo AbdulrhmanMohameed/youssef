@@ -19,7 +19,7 @@ const pad2 = n => String(n).padStart(2, '0');
 const themeBtn = $('#themeBtn');
 function syncThemeUI() {
   const dark = document.documentElement.dataset.theme !== 'light';
-  themeBtn.textContent = dark ? '☾' : '☀';
+  themeBtn.classList.toggle('is-light', !dark);   /* css swaps the moon / sun icon */
   const m = $('meta[name="theme-color"]');
   if (m) m.setAttribute('content', dark ? '#0a0a0b' : '#f5f3ee');
 }
@@ -34,11 +34,11 @@ syncThemeUI();
 /* ------------------------------------------------------ HEADER + MENU */
 const header = $('#siteHeader');
 const menuBtn = $('#menuBtn');
-const closeMenu = () => { document.body.classList.remove('menu-open'); if (menuBtn) menuBtn.textContent = '≡'; };
+const closeMenu = () => { document.body.classList.remove('menu-open'); if (menuBtn) menuBtn.classList.remove('is-open'); };
 if (menuBtn) {
   menuBtn.addEventListener('click', () => {
     const open = document.body.classList.toggle('menu-open');
-    menuBtn.textContent = open ? '✕' : '≡';
+    menuBtn.classList.toggle('is-open', open);
   });
 }
 addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 40), { passive: true });
