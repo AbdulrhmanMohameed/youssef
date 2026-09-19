@@ -432,52 +432,119 @@ html[data-theme="light"] .stat:nth-child(3) .stat-num{color:#0a9c86}
   .reveal{opacity:1;filter:none;transform:none}
 }
 
-/* =====================================================================
-   GSAP MOTION LAYER   (js/fx.js)
-   `html.gsap-on` means GSAP is alive and the CSS animations step aside.
-   ===================================================================== */
 
-/* ---- split text ---- */
-.hl{display:block}
+/* =====================================================================
+   HEADER ICONS
+   ===================================================================== */
+.ni{width:15px;height:15px;flex:none;display:block}
+nav a{display:inline-flex;align-items:center;gap:8px}
+nav a .ni{opacity:.5;transition:opacity .3s var(--ease),transform .3s var(--ease),color .3s var(--ease)}
+nav a:hover .ni,nav a.active .ni{opacity:1;color:var(--accent);transform:translateY(-1px)}
+.nav-cta{gap:8px}
+.nav-cta .ni{width:14px;height:14px;transition:transform .3s var(--ease)}
+.nav-cta:hover .ni{transform:translateX(3px)}
+.logo .dot{transition:transform .4s var(--ease)}
+
+/* the two icon buttons cross-fade between their two states */
+.icon-btn{position:relative;overflow:hidden}
+.icon-btn .ni{position:absolute;top:50%;left:50%;width:16px;height:16px;
+  transform:translate(-50%,-50%) rotate(0) scale(1);opacity:1;
+  transition:opacity .3s var(--ease),transform .45s var(--ease)}
+.theme-btn .i-sun{opacity:0;transform:translate(-50%,-50%) rotate(-90deg) scale(.55)}
+.theme-btn.is-light .i-moon{opacity:0;transform:translate(-50%,-50%) rotate(90deg) scale(.55)}
+.theme-btn.is-light .i-sun{opacity:1;transform:translate(-50%,-50%) rotate(0) scale(1)}
+.menu-btn .i-close{opacity:0;transform:translate(-50%,-50%) rotate(-90deg)}
+.menu-btn.is-open .i-bars{opacity:0;transform:translate(-50%,-50%) rotate(90deg)}
+.menu-btn.is-open .i-close{opacity:1;transform:translate(-50%,-50%) rotate(0)}
+
+.mobile-menu a{display:flex;align-items:center;gap:18px}
+.mobile-menu .ni{width:.4em;height:.4em;opacity:.3;transition:opacity .3s,color .3s}
+.mobile-menu a:hover .ni{opacity:1;color:var(--accent)}
+
+/* =====================================================================
+   MOTION LAYER  (js/fx.js · anime.js)
+   ===================================================================== */
+/* masked letters in the hero title */
+.hl{display:block;color:inherit}
 .hl.dim{color:var(--fg-dim)}
 .ln{display:block;overflow:hidden;padding-bottom:.08em}
 .ch{display:inline-block;will-change:transform}
-.hero-title h1 span.ch,.title span.ch{display:inline-block;color:inherit}
-.hl.dim .ch{color:var(--fg-dim)}
-.pl{display:block;will-change:transform}
+/* beats the stock `.hero-title h1 span{display:block}` rule */
+.hero-title h1 .ln{display:block;color:inherit}
+.hero-title h1 .ch{display:inline-block;color:inherit}
 
-/* ---- gsap takes over the reveal + card animations ---- */
-html.gsap-on .reveal{opacity:1;filter:none;transform:none;transition:none}
-html.gsap-on .works-grid .work-card{animation:none}
-html.gsap-on .work-card{transition:border-color .5s,box-shadow .5s}
-html.gsap-on .work-card:hover,
-html.gsap-on .work-card:focus-visible{transform:none}
-html.gsap-on .marquee:hover .marquee-row{animation-play-state:running}
+/* anime.js handles the works-grid entrance, so the css one steps aside */
+html.anime-on .works-grid .work-card{animation:none}
 
-/* ---- intro curtain ---- */
+/* RGB split when you run the cursor over the title — an editor's glitch */
+.hero-title h1 .ch{transition:text-shadow .25s var(--ease),transform .25s var(--ease)}
+.hero-title h1:hover .ch{text-shadow:2px 0 var(--ember),-2px 0 var(--teal)}
+.hero-title h1:hover .ch:nth-child(3n){transform:translateY(-2px)}
+.hero-title h1:hover .ch:nth-child(4n){transform:translateY(2px)}
+
+/* CRT scanlines + a slow flicker over the hero */
+.scanlines{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);
+  animation:flicker 7s steps(60) infinite}
+html[data-theme="light"] .scanlines{background:repeating-linear-gradient(to bottom,rgba(0,0,0,.03) 0 1px,transparent 1px 3px)}
+@keyframes flicker{0%,100%{opacity:.5}47%{opacity:.5}48%{opacity:.26}49%{opacity:.5}82%{opacity:.5}83%{opacity:.3}84%{opacity:.5}}
+
+/* little audio meter beside the scroll cue */
+.meter{display:flex;align-items:center;gap:3px;height:16px}
+.meter i{width:2px;height:100%;border-radius:1px;background:var(--teal);opacity:.7;transform:scaleY(.3);transform-origin:50% 50%}
+
+/* intro curtain */
 html.pre-on,html.pre-on body{overflow:hidden}
 .pre{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;align-items:center;justify-content:center}
-.pre-in{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative}
+.pre-in{display:flex;flex-direction:column;align-items:center;gap:10px}
 .pre-name{font-size:clamp(40px,8vw,92px);font-weight:900;text-transform:uppercase;letter-spacing:-.04em;line-height:1;color:var(--fg)}
 .pre-role{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--fg-faint)}
 .pre-bar{width:min(240px,50vw);height:2px;margin-top:24px;background:var(--border);overflow:hidden}
 .pre-bar i{display:block;width:100%;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%}
 .pre-n{font-family:var(--mono);font-size:11px;color:var(--fg-faint);letter-spacing:.1em}
 
-/* ---- works gallery filtering ---- */
-.works-grid{position:relative}
-.work-card.is-out{display:none}
-html.gsap-on .filter{transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease)}
-.filter{will-change:transform}
+/* accent hairline across the top */
+.scroll-prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:500;background:var(--accent);
+  transform:scaleX(0);transform-origin:0 50%;pointer-events:none;box-shadow:0 0 12px var(--accent)}
 
-/* ---- scroll progress ---- */
-.scroll-prog{position:fixed;top:0;left:0;right:0;height:2px;z-index:500;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;pointer-events:none;box-shadow:0 0 12px var(--accent)}
+/* =====================================================================
+   VISUAL DETAILS  (pure css — they work with or without the engine)
+   ===================================================================== */
+/* viewfinder brackets on a hovered card */
+.wc-frame::before,.wc-frame::after{content:'';position:absolute;width:20px;height:20px;opacity:0;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.wc-frame::before{top:14px;left:14px;border-top:2px solid var(--t1);border-left:2px solid var(--t1);transform:translate(6px,6px)}
+.wc-frame::after{bottom:14px;right:14px;border-bottom:2px solid var(--t1);border-right:2px solid var(--t1);transform:translate(-6px,-6px)}
+.work-card:hover .wc-frame::before,.work-card:hover .wc-frame::after{opacity:1;transform:translate(0,0)}
 
-/* ---- things gsap moves every frame ---- */
-.marquee-row,.wc-media,.wc-bottom,.wc-top,.hero-col{will-change:transform}
-.wc-poster,.wc-video{transform:scale(1.02)}
+/* pulse ring around the play button */
+.wc-play::after{content:'';position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(255,255,255,.6);opacity:0}
+.work-card:hover .wc-play::after{animation:pulseRing 1.8s var(--ease) infinite}
+@keyframes pulseRing{0%{opacity:.7;transform:scale(.85)}70%{opacity:0;transform:scale(1.35)}100%{opacity:0}}
+
+/* a light sweeps across the solid button */
+.btn-solid{position:relative;overflow:hidden}
+.btn-solid::after{content:'';position:absolute;top:0;bottom:0;width:60%;left:-80%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg)}
+.btn-solid:hover::after{animation:sweep .9s var(--ease)}
+@keyframes sweep{to{left:130%}}
+
+/* the shine buttons get the same trick, tuned down */
+.shine-btn{position:relative;overflow:hidden}
+.shine-btn::after{content:'';position:absolute;top:0;bottom:0;width:45%;left:-70%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent);transform:skewX(-18deg)}
+.shine-btn:hover::after{animation:sweep .8s var(--ease)}
+
+/* the active category reads like a lit button on a deck */
+.filter{position:relative}
+.filter.on{box-shadow:0 0 0 1px var(--fg),0 8px 24px -10px var(--fg)}
+.filter:not(.on):hover{transform:translateY(-2px)}
+
+/* a strip of film perforations under each section divider */
+.marquee{position:relative}
+.marquee::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:6px;opacity:.5;
+  background:repeating-linear-gradient(90deg,var(--border) 0 10px,transparent 10px 24px)}
 
 @media(prefers-reduced-motion:reduce){
-  .scroll-prog{display:none}
-  .ch,.pl{transform:none!important}
+  .scanlines,.meter,.scroll-prog{display:none}
+  .ch{transform:none!important}
 }
