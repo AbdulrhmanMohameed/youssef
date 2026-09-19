@@ -8,7 +8,7 @@ works.html        all works page
 css/style.css     styles (dark + light theme)
 js/data.js        <- add your videos here
 js/main.js        behavior
-js/fx.js          GSAP motion layer
+js/fx.js          motion + visuals (anime.js)
 videos/           put your .mp4 files here
 assets/           profile.jpg + optional poster images
 ```
@@ -29,40 +29,44 @@ placeholder cards, or simply overwrite `video` / `poster` with your own paths.
 Tips: export vertical 9:16 (e.g. 720x1280, H.264, under ~15 MB). GitHub blocks files over 100 MB.
 Bigger videos: upload elsewhere and paste the direct .mp4 URL in `video`.
 
-## Motion (GSAP)
-GSAP 3.13 loads from cdnjs in both pages, together with the bonus plugins that
-became free in that release:
+## Motion and visuals
+The engine is **anime.js 3.2.2** from cdnjs — vanilla, about 17 kB, no build
+step and no plugins to register. It replaced GSAP.
 
-```
-gsap  ScrollTrigger  SplitText  Flip  ScrambleTextPlugin  CustomEase
-```
-
-Everything lives in `js/fx.js`, split into numbered modules so you can switch
-any one of them off by deleting its block:
+`js/fx.js` is split into numbered modules; delete a block to switch it off.
 
 | # | module | what it does |
 |---|--------|--------------|
-| 01 | boot | registers plugins, three custom eases (`cut`, `lift`, `swipe`), text splitting with a hand-written fallback |
-| 02 | intro curtain | name, counter and loading bar, then the panel swipes up. Once per browser session, home page only |
-| 03 | hero | the title rises letter by letter out of a mask; pill, copy, buttons, cue, reel columns and nav follow. Reel frames drift with the pointer |
-| 04 | headings and paragraphs | every `.title` gets the same masked letter rise on scroll, and the copy under it comes up line by line (SplitText) |
-| 05 | reveals | GSAP takes over the `.reveal` class with a batched y + blur stagger |
-| 06 | marquee | driven by GSAP, speeds up with scroll velocity, settles back, slows on hover, plus a small velocity skew |
-| 07 | works reel | the card nearest the middle of the screen is the sharp one — the rest scale down, dim and shift their artwork |
-| 08 | works gallery | the category filters animate with **Flip**: cards fly to their new positions instead of re-rendering. Cards also enter on scroll |
-| 09 | cards + lightbox | artwork drifts behind the cursor, caption counter-moves, lift is GSAP's; the lightbox opens with its own sequence |
-| 10 | scramble | nav links and contact labels shuffle their letters on hover (ScrambleTextPlugin) |
-| 11 | light and extras | glows breathe, the colour slider sweeps itself on scroll, accent progress hairline, mobile-menu stagger, tool chips and process numbers |
+| 01 | boot | helpers, one shared easing, a small text splitter |
+| 02 | intro curtain | name, counter and loading bar, then the panel lifts. Once per browser session, home page only |
+| 03 | hero | title rises letter by letter out of a mask, then the pill, copy, buttons, cue and reel columns. Adds CRT scanlines and a live audio meter |
+| 04 | works cards | artwork lags behind the pointer and the caption counter-moves; cards step in each time a category is picked |
+| 05 | lightbox | player, info lines and close button open in sequence |
+| 06 | scroll progress | accent hairline across the top |
+| 07 | mobile menu | links stagger in |
+| 08 | micro | tool chips settle in, logo dot pops on a theme switch |
 
-Notes:
+### Visual details (pure CSS, no engine needed)
+* scanlines with a slow flicker over the hero
+* RGB split across the hero title while the cursor is over it
+* viewfinder brackets in the corners of a hovered card
+* a pulse ring around the play button
+* a light sweeping across the solid and shine buttons
+* the active category chip lights up like a button on a deck
+* film perforations under each marquee divider
+* header icons that cross-fade — moon/sun and bars/close
 
-* text is only split after `document.fonts.ready`, so SplitText never measures
-  the fallback font and breaks the lines in the wrong place
-* `html.gsap-on` is added by `fx.js`. The stylesheet uses it to stand down —
-  so if the CDN is blocked, the old CSS animations run instead and nothing breaks
-* everything is skipped under `prefers-reduced-motion: reduce`
+### Filtering
+The works page filter is back to the original `main.js` behaviour. `fx.js` only
+animates the cards in after the render; it does not touch the logic.
 
-The old hero timeline bar was removed; a small "Scroll" cue sits in its place.
+### Safety
+`html.anime-on` is only added when the CDN actually loaded. Everything is
+skipped under `prefers-reduced-motion: reduce`, and if the engine never arrives
+the page still looks and works right.
+
+The old hero timeline bar was removed; a small "Scroll" cue with the audio
+meter sits in its place.
 
 ## Deploy
 Push to GitHub, import the repo in Vercel, click Deploy (Framework Preset: Other, no build command).
