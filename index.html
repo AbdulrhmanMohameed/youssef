@@ -76,23 +76,10 @@
       </div>
     </div>
 
-    <!-- decorative editing timeline -->
-    <div class="timeline" id="timeline" aria-hidden="true">
-      <div class="tl-head">
-        <span><i class="rec"></i>SEQ_01 MAIN_CUT</span>
-        <span class="sp"></span>
-        <span class="tl-meta">4K 24 FPS</span>
-        <span class="tl-tc" id="tlTC">00:00:00:00</span>
-      </div>
-      <div class="tl-ruler">
-        <i class="tl-mk" style="left:11%;--c:#ff5a36"></i><i class="tl-mk" style="left:46%;--c:#19e3c6"></i><i class="tl-mk" style="left:82%;--c:#ffb020"></i>
-      </div>
-      <div class="tl-body">
-        <div class="tl-row hide-m"><b>V2</b><div class="tl-lane" id="laneV2"></div></div>
-        <div class="tl-row tall"><b>V1</b><div class="tl-lane" id="laneV1"></div></div>
-        <div class="tl-row tall"><b>A1</b><div class="tl-lane" id="laneA1"></div></div>
-        <div class="tl-play"><i class="tl-ph" id="tlPH"></i></div>
-      </div>
+    <!-- scroll cue (replaces the old timeline bar) -->
+    <div class="hero-cue" id="heroCue" aria-hidden="true">
+      <span class="cue-line"><i></i></span>
+      <span class="cue-txt">Scroll</span>
     </div>
   </section>
 </div>
@@ -305,7 +292,12 @@ My current goal is to specialize more in Motion Design and bring AI tools into m
 
 <button id="backToTop" class="back-to-top" data-cursor aria-label="Back to top"><i></i></button>
 
+<!-- GSAP (animation engine) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
 <script src="js/data.js"></script>
 <script src="js/main.js"></script>
+<script src="js/fx.js"></script>
 </body>
 </html>
