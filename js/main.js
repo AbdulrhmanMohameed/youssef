@@ -11,7 +11,7 @@ const isTouch = matchMedia('(hover:none)').matches;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TONES = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-/* small seeded random so the generated timeline looks the same every load */
+/* small seeded random so generated visuals look the same every load */
 const seeded = seed => { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; };
 const pad2 = n => String(n).padStart(2, '0');
 
@@ -291,7 +291,7 @@ const rm = $('#readMoreBtn');
 if (rm) rm.addEventListener('click', () => $('#aboutFull').classList.toggle('open'));
 
 /* ================================================================
-   HERO  (home only): reel columns, timeline, parallax fade
+   HERO  (home only): reel columns + parallax fade
    ================================================================ */
 const heroInner = $('#heroInner');
 if (heroInner) {
@@ -308,52 +308,13 @@ if (heroInner) {
     el.innerHTML = html;
   });
 
-  /* timeline clips: footage on V1, titles on V2, linked audio on A1 */
-  const V1_NAMES = ['A012_C003', 'Interview_01', 'Drone_04', 'B-roll', 'GH010231', 'Cutaway', 'Product_02', 'A014_C009', 'Outro'];
-  const V2_NAMES = ['Title', 'Lower third', 'Logo', 'Subtitle', 'Overlay'];
-  const V1_COLORS = ['teal', 'teal', 'blue', 'blue', 'ember'];
-  const rnd = seeded(8);
-  const cuts = []; let cx = 0;
-  while (cx < 99) {
-    let w = 9 + rnd() * 15;
-    if (100 - (cx + w) < 8) w = 100 - cx;
-    cuts.push([cx, w]); cx += w;
-  }
-  $('#laneV1').innerHTML = cuts.map(([x, w], i) =>
-    `<div class="tl-clip thumbs c-${V1_COLORS[Math.floor(rnd() * V1_COLORS.length)]}" style="left:${x.toFixed(2)}%;width:${(w - 0.3).toFixed(2)}%"><span>${V1_NAMES[i % V1_NAMES.length]}</span></div>`).join('');
-
-  const r2 = seeded(21); let px = 4, k = 0, v2 = '';
-  while (px < 90) {
-    const w = 5 + r2() * 7;
-    v2 += `<div class="tl-clip c-${r2() < 0.6 ? 'violet' : 'rose'}" style="left:${px.toFixed(2)}%;width:${w.toFixed(2)}%"><span>${V2_NAMES[k++ % V2_NAMES.length]}</span></div>`;
-    px += w + 7 + r2() * 14;
-  }
-  $('#laneV2').innerHTML = v2;
-
-  const r3 = seeded(3);
-  $('#laneA1').innerHTML = cuts.map(([x, w]) => {
-    const n = Math.max(10, Math.round(w * 3.4)), ph0 = r3() * 6, top = [], bot = [];
-    for (let i = 0; i < n; i++) {
-      const a = (0.2 + 0.8 * r3()) * (0.45 + 0.55 * Math.abs(Math.sin(i / 3.4 + ph0)));
-      top.push(`${i},${(10 - a * 9).toFixed(2)}`); bot.unshift(`${i},${(10 + a * 9).toFixed(2)}`);
-    }
-    return `<div class="tl-aclip" style="left:${x.toFixed(2)}%;width:${(w - 0.3).toFixed(2)}%"><svg viewBox="0 0 ${n} 20" preserveAspectRatio="none"><polygon points="${top.concat(bot).join(' ')}"/></svg></div>`;
-  }).join('');
-
-  /* playhead + timecode */
-  const ph = $('#tlPH'), tc = $('#tlTC');
-  const LOOP = 18000, FPS = 24;
-  const fmt = f => `${pad2(Math.floor(f / (FPS * 3600)))}:${pad2(Math.floor(f / (FPS * 60)) % 60)}:${pad2(Math.floor(f / FPS) % 60)}:${pad2(f % FPS)}`;
-  const setPlayhead = p => { ph.style.left = (p * 100).toFixed(3) + '%'; tc.textContent = fmt(Math.floor(p * LOOP / 1000 * FPS)); };
-
   /* parallax fade as the page scrolls over the fixed hero */
-  const heroCols = $('.hero-cols');
+  const heroCols = $('.hero-cols'), heroCue = $('#heroCue');
   let cur = scrollY, target = scrollY;
   addEventListener('scroll', () => { target = scrollY; }, { passive: true });
   const colOpacity = getComputedStyle(heroCols).opacity;
 
-  if (reduceMotion) setPlayhead(0.38);
-  (function loop(t) {
+  (function loop() {
     cur += (target - cur) * 0.1;
     if (cur < innerHeight * 1.2) {
       const o = Math.max(0, Math.min(1, 1 - cur / (innerHeight * 0.8)));
@@ -361,7 +322,7 @@ if (heroInner) {
       heroInner.style.transform = `translateY(${cur * 0.4}px)`;
       heroCols.style.opacity = o * parseFloat(colOpacity || 0.85);
       heroCols.style.transform = `translateY(${cur * 0.1}px)`;
-      if (!reduceMotion) setPlayhead((t % LOOP) / LOOP);
+      if (heroCue) heroCue.style.opacity = Math.max(0, 1 - cur / 220);
     }
     requestAnimationFrame(loop);
   })(0);
