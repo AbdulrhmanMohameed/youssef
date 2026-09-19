@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Works — Youssef, Video Editor</title>
+<meta name="description" content="All video projects by Youssef: reels, ads, music videos, short films and motion design.">
+<meta name="theme-color" content="#0a0a0b">
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="cursor-el" id="curDot"><i class="dot-i"></i></div>
+<div class="cursor-el" id="curRing"><i class="ring-i"><span class="lbl">Play</span></i></div>
+
+<header id="siteHeader">
+  <a class="logo" href="index.html"><span class="dot"></span>Youssef</a>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#stack">Tools</a></li>
+      <li><a href="index.html#process">Process</a></li>
+      <li><a href="works.html" class="active">Works</a></li>
+      <li><a href="index.html#roadmap">Roadmap</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-tools">
+    <a class="nav-cta" href="index.html#contact">Let's talk</a>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle light and dark theme">☾</button>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">≡</button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#stack">Tools</a>
+  <a href="index.html#process">Process</a>
+  <a href="works.html">Works</a>
+  <a href="index.html#roadmap">Roadmap</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+
+<main>
+  <section class="page-head">
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="wrap">
+      <h1 class="title">All works</h1>
+      <p>Every reel, ad, music video and motion piece in one place. Pick a category, then click any card to play it.</p>
+    </div>
+  </section>
+
+  <section style="padding-bottom:120px">
+    <div class="wrap">
+      <div class="filters" id="filters"></div>
+      <div class="works-grid" id="worksGrid"></div>
+
+      <div class="works-cta reveal">
+        <h2>Have a project in mind?</h2>
+        <a href="index.html#contact" class="btn-solid magnetic" data-cursor>Contact me →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap" style="padding-bottom:50px">
+    <div class="contact-foot" style="padding-bottom:0">
+      <div class="copyright"><span>© 2026</span><span class="dt"></span><span>Youssef. All rights reserved.</span></div>
+      <a href="index.html" class="shine-btn" data-cursor>← Back to home</a>
+    </div>
+  </footer>
+</main>
+
+<button id="backToTop" class="back-to-top" data-cursor aria-label="Back to top"><i></i></button>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

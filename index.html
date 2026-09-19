@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Youssef — Video Editor</title>
+<meta name="description" content="Youssef is a video editor. Reels, ads, music videos and motion design, cut with an eye for rhythm and detail.">
+<meta name="theme-color" content="#0a0a0b">
+<!-- apply the saved theme before the page paints (no flash) -->
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'dark')}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal{opacity:1;filter:none;transform:none}.road-box{filter:none;opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+
+<div class="cursor-el" id="curDot"><i class="dot-i"></i></div>
+<div class="cursor-el" id="curRing"><i class="ring-i"><span class="lbl">Play</span></i></div>
+
+<header id="siteHeader">
+  <a class="logo" href="#home"><span class="dot"></span>Youssef</a>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#stack">Tools</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#projects">Works</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="nav-tools">
+    <a class="nav-cta" href="#contact">Let's talk</a>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle light and dark theme">☾</button>
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">≡</button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#stack">Tools</a>
+  <a href="#process">Process</a>
+  <a href="#projects">Works</a>
+  <a href="works.html">All works</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ================= HERO (fixed behind, content scrolls over it) ================= -->
+<div class="hero-container" id="home">
+  <section class="hero">
+    <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+
+    <div class="hero-cols" aria-hidden="true">
+      <div class="hero-col"><div class="hero-col-track" id="col1"></div></div>
+      <div class="hero-col rev"><div class="hero-col-track" id="col2"></div></div>
+    </div>
+    <div class="hero-fade-t"></div>
+    <div class="hero-fade-s"></div>
+
+    <div class="hero-inner" id="heroInner">
+      <span class="pill"><i class="rec"></i>Available for freelance in 2026</span>
+      <div class="hero-title">
+        <h1>Youssef<span>Video Editor</span></h1>
+      </div>
+      <div class="hero-sub">
+        <p>I turn raw footage into visual stories with rhythm and meaning: ads, music videos and social content, cut with an eye for detail.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-solid magnetic" data-cursor>Contact me →</a>
+          <a href="#projects" class="btn-outline magnetic" data-cursor>See the work</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- decorative editing timeline -->
+    <div class="timeline" id="timeline" aria-hidden="true">
+      <div class="tl-head">
+        <span><i class="rec"></i>SEQ_01 MAIN_CUT</span>
+        <span class="sp"></span>
+        <span class="tl-meta">4K 24 FPS</span>
+        <span class="tl-tc" id="tlTC">00:00:00:00</span>
+      </div>
+      <div class="tl-ruler"></div>
+      <div class="tl-body">
+        <div class="tl-row hide-m"><b>V2</b><div class="tl-lane" id="laneV2"></div></div>
+        <div class="tl-row"><b>V1</b><div class="tl-lane" id="laneV1"></div></div>
+        <div class="tl-row"><b>A1</b><div class="tl-lane wave" id="laneA1"></div></div>
+        <div class="tl-play"><i class="tl-ph" id="tlPH"></i></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<main class="content-layer">
+
+  <div class="marquee"><div class="marquee-edge l"></div><div class="marquee-edge r"></div><div class="marquee-row"></div></div>
+
+  <!-- ABOUT -->
+  <section id="about" class="sec-pad">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-left reveal">
+          <h2 class="title">About</h2>
+          <div class="about-line-box">
+            <div class="a-line-dot"></div>
+            <svg class="rope-svg" aria-hidden="true"><line x1="50%" y1="4" x2="50%" y2="80" stroke-width="1.5"></line></svg>
+            <div id="ropeCard">
+              <div class="profile-widget">
+                <div class="pw-initial">Y</div>
+                <!-- put your photo at assets/profile.jpg -->
+                <img src="assets/profile.jpg" alt="Portrait of Youssef" loading="lazy" onerror="this.remove()">
+                <span class="cap">Youssef<br>Video Editor</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-right">
+          <div class="reveal">
+            <p class="about-lead">I'm a <span class="serif-italic">Video Editor</span> focused on <b>visual storytelling</b> and precise pacing.</p>
+          </div>
+          <div class="reveal">
+            <p class="about-desc">I work on video projects for social media, ads and music videos, making sure every cut and shot serves the story, not just the look.</p>
+            <button class="readmore-btn" id="readMoreBtn" data-cursor><span>Read the full story</span> →</button>
+            <div class="about-full" id="aboutFull"><p>I'm Youssef, a video editor for a few years now, always picking up new tools and techniques. I work on social media, advertising and music video projects, mainly using Premiere Pro, After Effects and DaVinci Resolve.
+
+I care a lot about keeping the work clean, organized and fast to deliver, and I simplify my workflow as much as I can so I can focus on the creative part instead of technical overhead.
+
+My current goal is to specialize more in Motion Design and bring AI tools into my workflow so I can produce stronger content in less time.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS (edit the numbers in data-count) -->
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><div class="stat-num" data-count="4" data-suffix="+">4+</div><div class="stat-lbl">Years editing</div></div>
+      <div class="stat"><div class="stat-num" data-count="50" data-suffix="+">50+</div><div class="stat-lbl">Projects delivered</div></div>
+      <div class="stat"><div class="stat-num" data-count="13">13</div><div class="stat-lbl">Tools in the kit</div></div>
+    </div>
+  </div>
+
+  <div class="marquee rev" style="margin-top:120px"><div class="marquee-edge l"></div><div class="marquee-edge r"></div><div class="marquee-row"></div></div>
+
+  <!-- TOOLS -->
+  <section id="stack" class="sec-pad">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:56px"><h2 class="title">Tools</h2></div>
+      <div id="stackContainer"></div>
+    </div>
+  </section>
+
+  <!-- COLOR GRADING before / after -->
+  <section id="grade" class="sec-pad alt">
+    <div class="wrap grade-grid">
+      <div class="grade-copy reveal">
+        <h2 class="title">Color</h2>
+        <p>Flat footage in, a look out. Drag the slider to see a raw frame become a graded one. Swap in your own before and after frames anytime.</p>
+        <div class="swatches" aria-hidden="true">
+          <i style="background:#ff5a36"></i><i style="background:#ffb020"></i><i style="background:#19e3c6"></i><i style="background:#3d8bff"></i><i style="background:#7c5cff"></i>
+        </div>
+      </div>
+      <div class="ba reveal" id="ba">
+        <div class="ba-scene raw"></div>
+        <div class="ba-scene graded"></div>
+        <div class="ba-handle"><span></span></div>
+        <span class="ba-tag l">Raw</span><span class="ba-tag r">Graded</span>
+        <input type="range" min="0" max="100" value="50" aria-label="Compare raw and graded">
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="sec-pad">
+    <div class="wrap">
+      <div class="reveal"><h2 class="title">Process</h2></div>
+      <div class="process-grid">
+        <div class="step reveal">
+          <div class="mv"><div class="mv-bins"></div></div>
+          <span class="n">01</span><h3>Organize</h3>
+          <p>Footage gets synced, labeled and sorted into bins first, so nothing slows the edit down later.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.08s">
+          <div class="mv"><div class="mv-cut"></div></div>
+          <span class="n">02</span><h3>Cut</h3>
+          <p>A rough cut finds the story. The fine cut tightens the rhythm until every shot earns its place.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.16s">
+          <div class="mv"><div class="wave-bars" data-wave="34"></div></div>
+          <span class="n">03</span><h3>Sound and motion</h3>
+          <p>Sound design, music and motion graphics go in, all timed to the beat of the edit.</p>
+        </div>
+        <div class="step reveal" style="transition-delay:.24s">
+          <div class="mv mv-color"><i style="--dx:28%;--dy:62%"></i><i style="--dx:52%;--dy:44%"></i><i style="--dx:70%;--dy:30%"></i></div>
+          <span class="n">04</span><h3>Color and delivery</h3>
+          <p>A final grade, then exports made for each platform, delivered fast and in clean files.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee"><div class="marquee-edge l"></div><div class="marquee-edge r"></div><div class="marquee-row"></div></div>
+
+  <!-- WORKS: vertical scroll drives a horizontal reel of 9:16 cards -->
+  <section id="projects">
+    <div id="projects-sticky">
+      <div id="projects-track">
+        <div class="proj-lead">
+          <h2 class="title">Works</h2>
+          <p class="proj-intro">Reels, ads, music videos and more. Hover a card to preview it, click to play.</p>
+          <a href="works.html" class="btn-outline" data-cursor>View all works →</a>
+          <div class="proj-scroll-note"><div class="ln"></div><span>Keep scrolling</span></div>
+        </div>
+
+        <div id="projCards"></div>
+
+        <a href="works.html" class="proj-end" data-cursor>
+          <span class="big">→</span>
+          <span><strong>View all works</strong><small id="worksCount">12 projects</small></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (placeholders: replace with real client words) -->
+  <section id="testimonials" class="sec-pad" style="padding-top:80px">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;margin-bottom:50px">
+        <h2 class="title" style="font-size:clamp(34px,5vw,60px)">Testimonials</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal" style="--c:var(--ember)">
+          <div class="testi-quote-icon">“</div>
+          <p>“Excellent work and on-time delivery. Youssef has an artistic eye that makes a huge difference.”</p>
+          <h4>Ahmed Saeed</h4><span class="role">Commercial Director</span>
+        </div>
+        <div class="testi-card reveal" style="--c:var(--violet);transition-delay:.1s">
+          <div class="testi-quote-icon">“</div>
+          <p>“One of the best editors I've worked with. Fast, flexible with edits, and understands the vision quickly.”</p>
+          <h4>Mahmoud Tarek</h4><span class="role">Content Creator</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee rev"><div class="marquee-edge l"></div><div class="marquee-edge r"></div><div class="marquee-row"></div></div>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="sec-pad">
+    <div class="wrap">
+      <div class="reveal" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:80px">
+        <h2 class="title">Roadmap</h2>
+        <p style="font-style:italic;color:var(--fg-dim);max-width:480px;font-size:18px;line-height:1.6">My journey in video editing, from the first cut to today.</p>
+      </div>
+      <div class="road-wrap" id="roadWrap">
+        <div class="road-line"></div>
+        <div class="road-progress" id="roadProgress"><div class="road-progress-dot"></div></div>
+        <div id="roadContainer"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee"><div class="marquee-edge l"></div><div class="marquee-edge r"></div><div class="marquee-row"></div></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="sec-pad" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="contact-head reveal">
+        <h2 class="title">Contact</h2>
+        <p>Whether we start fresh to bring a project to life or take an existing one further.</p>
+      </div>
+
+      <div class="contact-rows reveal">
+        <a href="mailto:hello@youssef.video" class="contact-row" data-cursor>
+          <span class="lbl">Send an email</span>
+          <div class="val-wrap"><span class="val">hello@youssef.video</span><div class="arrow">↗</div></div>
+        </a>
+        <a href="#" class="contact-row" data-cursor>
+          <span class="lbl">Direct line</span>
+          <div class="val-wrap"><span class="val">Not added yet</span><div class="arrow">↗</div></div>
+        </a>
+      </div>
+
+      <div class="contact-foot">
+        <div class="copyright"><span>© 2026</span><span class="dt"></span><span>Youssef. All rights reserved.</span></div>
+        <div class="socials">
+          <a href="#" class="shine-btn" data-cursor>Instagram ↗</a>
+          <a href="#" class="shine-btn" data-cursor>YouTube ↗</a>
+          <a href="#" class="shine-btn" data-cursor>Behance ↗</a>
+          <a href="#" class="shine-btn" data-cursor>WhatsApp ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<button id="backToTop" class="back-to-top" data-cursor aria-label="Back to top"><i></i></button>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
